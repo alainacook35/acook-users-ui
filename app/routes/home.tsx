@@ -1,5 +1,5 @@
 import type { Route } from "./+types/home";
-import { UsersList } from "../welcome/UsersList";
+import { UsersList } from "../components/UsersList";
 
 export function meta({}: Route.MetaArgs) {
   return [
