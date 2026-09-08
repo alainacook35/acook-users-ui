@@ -1,12 +1,12 @@
 import type { ReactNode } from "react";
 import type { IPage, IUser } from "~/utils/interfaces";
 
-export default function Table({ page }: { page: IPage<IUser> }) {
+export default function Table({ page }: { page: IUser[] }) {
   return (
-    <>
-      <table style={{ height: "100%"}}>
+    <div className="w-full border-2 border-solid border-gray-400 rounded-sm">
+      <table className="w-full">
         <thead>
-          <tr className="table-header">
+          <tr className="table-header bg-primary sticky top-0">
             <td>ID</td>
             <td>First Name</td>
             <td>Last Name</td>
@@ -18,7 +18,7 @@ export default function Table({ page }: { page: IPage<IUser> }) {
           </tr>
         </thead>
         <tbody>
-          {page.content.map((user, index) => {
+          {page.map((user, index) => {
             return (
               <tr className={`table-row-${index}`}>
                 <td>{user.id}</td>
@@ -34,6 +34,6 @@ export default function Table({ page }: { page: IPage<IUser> }) {
           })}
         </tbody>
       </table>
-    </>
+    </div>
   );
 }

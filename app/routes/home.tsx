@@ -9,5 +9,9 @@ export function meta({}: Route.MetaArgs) {
 }
 
 export default function Home() {
-  return <UsersList />;
+  return (
+    <main className="flex h-screen justify-center">
+      <UsersList />
+    </main>
+  );
 }
