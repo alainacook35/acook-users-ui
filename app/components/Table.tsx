@@ -1,34 +1,108 @@
-import type { ReactNode } from "react";
-import type { IPage, IUser } from "~/utils/interfaces";
+import type { IUser, IUserSort } from "~/utils/interfaces";
+import TableHeaderWithSort from "./TableHeaderWithSort";
+import type { SetStateAction, Dispatch } from "react";
+import IconButton from "./IconButton";
+import { FaTrash } from "react-icons/fa";
 
-export default function Table({ page }: { page: IUser[] }) {
+const COLUMNS: {
+  columnName: keyof IUser;
+  label: string;
+  styleClasses?: string | undefined;
+}[] = [
+  {
+    columnName: "id",
+    label: "ID",
+    styleClasses: "w-24",
+  },
+  {
+    columnName: "firstName",
+    label: "First Name",
+    styleClasses: "max-w-48",
+  },
+  {
+    columnName: "lastName",
+    label: "Last Name",
+    styleClasses: "max-w-48",
+  },
+  {
+    columnName: "email",
+    label: "Email",
+    styleClasses: "max-w-80",
+  },
+  {
+    columnName: "profession",
+    label: "Profession",
+    styleClasses: "max-w-48",
+  },
+  {
+    columnName: "city",
+    label: "City",
+    styleClasses: "max-w-48",
+  },
+  {
+    columnName: "country",
+    label: "Country",
+    styleClasses: "max-w-48",
+  },
+  {
+    columnName: "dateCreated",
+    label: "Date Created",
+    styleClasses: "max-w-48",
+  },
+];
+
+export default function Table({
+  page,
+  sort,
+  setSort,
+  deleteAction,
+}: {
+  page: IUser[];
+  sort: IUserSort;
+  setSort: Dispatch<SetStateAction<IUserSort>>;
+  deleteAction: (id: number) => unknown;
+}) {
   return (
-    <div className="w-full border-2 border-solid border-gray-400 rounded-sm">
-      <table className="w-full">
-        <thead>
-          <tr className="table-header bg-primary sticky top-0">
-            <td>ID</td>
-            <td>First Name</td>
-            <td>Last Name</td>
-            <td>Email</td>
-            <td>Profession</td>
-            <td>City</td>
-            <td>Country</td>
-            <td>Date Created</td>
-          </tr>
-        </thead>
+    <div className="w-full">
+      <table className="w-full table-fixed">
+        <tr className="table-header bg-secondary sticky top-0 text-white text-left">
+          {COLUMNS.map(({ columnName, label, styleClasses }) => (
+            <TableHeaderWithSort
+              key={columnName}
+              columnName={columnName}
+              currentSort={sort}
+              setSort={setSort}
+              styleClasses={styleClasses}
+            >
+              {label}
+            </TableHeaderWithSort>
+          ))}
+          {/* Actions Column*/}
+          <th className="w-24"></th>
+        </tr>
         <tbody>
           {page.map((user, index) => {
             return (
-              <tr className={`table-row-${index}`}>
-                <td>{user.id}</td>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.email}</td>
-                <td>{user.profession}</td>
-                <td>{user.city}</td>
-                <td>{user.country}</td>
-                <td>{user.dateCreated}</td>
+              <tr
+                className={`table-row-${index} odd:bg-gray-100 even:bg-(--color-surface) transition-colors duration-200 hover:bg-gray-200`}
+              >
+                <td className="max-w-24 truncate">{user.id}</td>
+                <td className="max-w-48 truncate">{user.firstName}</td>
+                <td className="max-w-48 truncate">{user.lastName}</td>
+                <td className="max-w-80 truncate">{user.email}</td>
+                <td className="max-w-48 truncate">{user.profession}</td>
+                <td className="max-w-48 truncate">{user.city}</td>
+                <td className="max-w-48 truncate">{user.country}</td>
+                <td className="max-w-48 truncate">{user.dateCreated}</td>
+                <td className="w-24">
+                  <IconButton
+                    className="text-primary hover:text-secondary transition-colors duration-200"
+                    icon={<FaTrash />}
+                    onClick={() => {
+                      deleteAction(user.id);
+                    }}
+                  />
+                </td>
               </tr>
             );
           })}

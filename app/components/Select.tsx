@@ -1,23 +1,32 @@
-// Because of time crunch, the forced type of options makes this component not really reusable, fix if time left
-export default function Select({
+export interface SelectOption<T> {
+  label: string;
+  value: T;
+}
+
+export default function Select<T>({
   options,
-  selected,
+  selectedOption,
   setSelected,
+  id = "select-page-number",
 }: {
-  options: number[];
-  selected: number;
-  setSelected: (selected: number) => void;
+  options: SelectOption<T>[];
+  selectedOption: T;
+  setSelected: (selected: T) => void;
+  id?: string;
 }) {
+  const selectedIndex = options.findIndex((opt) => opt.value === selectedOption);
+
   return (
     <div className="my-1 mx-1">
       <select
+        id={id}
         className="rounded-sm p-1 border-2 border-solid border-primary"
-        value={selected}
-        onChange={(e) => setSelected(Number(e.target.value))}
+        value={selectedIndex}
+        onChange={(e) => setSelected(options[Number(e.target.value)].value)}
       >
-        {options.map((opt) => (
-          <option key={opt} value={opt}>
-            {opt}
+        {options.map((opt, index) => (
+          <option key={index} value={index}>
+            {opt.label}
           </option>
         ))}
       </select>

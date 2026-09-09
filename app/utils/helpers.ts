@@ -3,7 +3,7 @@
  * - Strings must be non-null/undefined and non-blank after trimming.
  * - Numbers (and other non-string values) must simply not be null/undefined.
  */
-export function isDefined(value: string | number | null | undefined): boolean {
+export function isDefined(value: string | number | object | null | undefined): boolean {
   if (typeof value === "string") {
     return value.trim() !== "";
   }

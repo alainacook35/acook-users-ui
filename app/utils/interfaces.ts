@@ -22,17 +22,7 @@ export interface IPage<T> {
   totalPages: number;
 }
 
-export interface IUserPageState {
-  search?: string;
-  // filters
-  profession?: string;
-  city?: string;
-  country?: string;
-  startDate?: string;
-  endDate?: string;
-  // pagination
-  sortDirection: "asc" | "desc";
-  sortBy: string;
+export interface IPaginationState {
   empty: boolean;
   first: boolean;
   last: boolean;
@@ -41,3 +31,23 @@ export interface IUserPageState {
   totalElements?: number;
   totalPages?: number;
 }
+
+export interface IUserSort {
+  direction: "asc" | "desc";
+  columnName: keyof IUser;
+}
+
+/**
+ * The set of user attributes we allow filtering on. Deliberately a standalone
+ * shape rather than being derived from IUser: it drops id/firstName/lastName/email,
+ * and splits dateCreated into a startDate/endDate range.
+ */
+export interface IUserFiltersState {
+  profession?: string;
+  city?: string;
+  country?: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+export type FilterKey = keyof IUserFiltersState;

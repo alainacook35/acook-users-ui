@@ -4,12 +4,14 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 
-  --color-primary: #1b4f72;
-  --color-secondary: #a8d8ea;
-  --color-accent: #2e86ab;
-  --color-background: #f0f8ff;
+  --color-primary: #4a5568;
+  --color-primary-lighter: #65748e;
+  --color-secondary: #6aa7ce;
+  --color-secondary-lighter: #4f7d9b;
+  --color-accent: #718096;
+  --color-background: #f7fafc;
   --color-surface: #ffffff;
-  --color-text: #0d1b2a;
+  --color-text: #1a202c;
 }
 
 tr {

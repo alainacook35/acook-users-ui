@@ -1,4 +1,4 @@
-import type { IUserPageState } from "~/utils/interfaces";
+import type { IPaginationState } from "~/utils/interfaces";
 import IconButton from "./IconButton";
 import {
   FaChevronRight,
@@ -6,7 +6,6 @@ import {
   FaAngleDoubleRight,
   FaAngleDoubleLeft,
 } from "react-icons/fa";
-import type { Dispatch, SetStateAction } from "react";
 import Select from "./Select";
 
 export default function Pagination({
@@ -16,8 +15,8 @@ export default function Pagination({
   setSelectedPageSize,
 }: {
   selectedPageSize: number;
-  setSelectedPageSize: (pageCount: number) => unknown;
-  paginationState: IUserPageState;
+  setSelectedPageSize: (pageCount: number) => void;
+  paginationState: IPaginationState;
   getPage: (pageNumber: number, pageSize: number) => unknown;
 }) {
   const getNextPage = () => {
@@ -45,7 +44,11 @@ export default function Pagination({
   };
 
   const getLastPage = () => {
-    if (!!paginationState.empty || !!paginationState.last || paginationState.totalPages === undefined) {
+    if (
+      !!paginationState.empty ||
+      !!paginationState.last ||
+      paginationState.totalPages === undefined
+    ) {
       return;
     }
 
@@ -53,42 +56,52 @@ export default function Pagination({
   };
 
   return (
-    <div className="justify-between width-full flex">
+    <div className="justify-between width-full flex mt-2">
       <div className="my-auto mx-1">
         <p>
-          Page {paginationState.number + 1} of {paginationState.totalPages || "?"}
+          Page {paginationState.number + 1} of{" "}
+          {paginationState.totalPages || "?"}
         </p>
       </div>
       <div className="flex">
         <Select
-          selected={selectedPageSize}
+          selectedOption={selectedPageSize}
           setSelected={setSelectedPageSize}
-          options={[5, 10, 20, 50]}
+          options={[5, 10, 20, 50].map((opt) => ({
+            label: String(opt),
+            value: opt,
+          }))}
         />
-        <IconButton
-          className="first-page-btn"
-          disabled={!!paginationState.empty || !!paginationState.first}
-          icon={<FaAngleDoubleLeft />}
-          onClick={getFirstPage}
-        />
-        <IconButton
-          className="previous-page-btn"
-          disabled={!!paginationState.empty || !!paginationState.first}
-          icon={<FaChevronLeft />}
-          onClick={getPreviousPage}
-        />
-        <IconButton
-          className="next-page-btn"
-          disabled={!!paginationState.empty || !!paginationState.last}
-          icon={<FaChevronRight />}
-          onClick={getNextPage}
-        />
-        <IconButton
-          className="last-page-btn"
-          disabled={!!paginationState.empty || !!paginationState.last}
-          icon={<FaAngleDoubleRight />}
-          onClick={getLastPage}
-        />
+        <div className="flex my-auto">
+          <IconButton
+            title="Go to first page"
+            className="first-page-btn text-primary transition-colors duration-200 hover:bg-gray-100 disabled:text-gray-300 disabled:bg-transparent"
+            disabled={!!paginationState.empty || !!paginationState.first}
+            icon={<FaAngleDoubleLeft />}
+            onClick={getFirstPage}
+          />
+          <IconButton
+            title="Go to previous page"
+            className="previous-page-btn text-primary transition-colors duration-200 hover:bg-gray-100 disabled:text-gray-300 disabled:bg-transparent"
+            disabled={!!paginationState.empty || !!paginationState.first}
+            icon={<FaChevronLeft />}
+            onClick={getPreviousPage}
+          />
+          <IconButton
+            title="Go to next page"
+            className="next-page-btn text-primary transition-colors duration-200 hover:bg-gray-100 disabled:text-gray-300 disabled:bg-transparent"
+            disabled={!!paginationState.empty || !!paginationState.last}
+            icon={<FaChevronRight />}
+            onClick={getNextPage}
+          />
+          <IconButton
+            title="Go to last page"
+            className="last-page-btn text-primary transition-colors duration-200 hover:bg-gray-100 disabled:text-gray-300 disabled:bg-transparent"
+            disabled={!!paginationState.empty || !!paginationState.last}
+            icon={<FaAngleDoubleRight />}
+            onClick={getLastPage}
+          />
+        </div>
       </div>
     </div>
   );
