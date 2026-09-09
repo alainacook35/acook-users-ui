@@ -1,4 +1,4 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useState } from "react";
 import type { IUserFiltersState } from "~/utils/interfaces";
 import TextField from "./TextField";
 import Button from "./Button";
@@ -12,6 +12,7 @@ export default function UserFilters({
   setUserFilters: (filters: IUserFiltersState) => unknown;
 }) {
   const [currentFilters, setCurrentFilters] = useState(userFilters);
+  
   return (
     <div>
       <div className="flex justify-between justify-between my-5">
@@ -93,7 +94,6 @@ export default function UserFilters({
         <Button
           onClick={() => {
             setUserFilters(currentFilters);
-            close();
           }}
         >
           Save

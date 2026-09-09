@@ -26,7 +26,7 @@ export default function TableHeaderWithSort({
       {children}{" "}
       <IconButton
         icon={icon}
-        className={sort ? "opacity-100" : "opacity-0 group-hover:opacity-100"}
+        className={`${sort ? "opacity-100" : "opacity-0 group-hover:opacity-100"} hover:bg-transparent text-white`}
         onClick={() => {
           if (sort === undefined) {
             setSort({ columnName, direction: "asc" });

@@ -4,8 +4,8 @@ import usersComLogo from "../assets/users-com-logo.svg";
 
 export function meta({}: Route.MetaArgs) {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "View Users" },
+    { name: "description", content: "Sort and filter users" },
   ];
 }
 

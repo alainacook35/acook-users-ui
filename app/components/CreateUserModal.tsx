@@ -5,8 +5,8 @@ import { Controller, useForm, type Control } from "react-hook-form";
 import type { IUserRequest } from "~/utils/interfaces";
 import Button from "./Button";
 import TextField from "./TextField";
-import useAxios from "~/hooks/useAxios";
-import { useToast } from "~/hooks/useToast";
+import useAxios from "../hooks/useAxios";
+import { useToast } from "../hooks/useToast";
 
 function FormField({
   name,

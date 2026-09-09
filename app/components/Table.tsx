@@ -63,49 +63,60 @@ export default function Table({
   deleteAction: (id: number) => unknown;
 }) {
   return (
-    <div className="w-full">
-      <table className="w-full table-fixed">
-        <tr className="table-header bg-secondary sticky top-0 text-white text-left">
-          {COLUMNS.map(({ columnName, label, styleClasses }) => (
-            <TableHeaderWithSort
-              key={columnName}
-              columnName={columnName}
-              currentSort={sort}
-              setSort={setSort}
-              styleClasses={styleClasses}
-            >
-              {label}
-            </TableHeaderWithSort>
-          ))}
-          {/* Actions Column*/}
-          <th className="w-24"></th>
-        </tr>
-        <tbody>
-          {page.map((user, index) => {
-            return (
-              <tr
-                className={`table-row-${index} odd:bg-gray-100 even:bg-(--color-surface) transition-colors duration-200 hover:bg-gray-200`}
+    <div className="w-full h-full">
+      <table className="w-full table-fixed h-full">
+        <thead>
+          <tr className="table-header bg-secondary sticky top-0 text-white text-left">
+            {COLUMNS.map(({ columnName, label, styleClasses }) => (
+              <TableHeaderWithSort
+                key={columnName}
+                columnName={columnName}
+                currentSort={sort}
+                setSort={setSort}
+                styleClasses={styleClasses}
               >
-                <td className="max-w-24 truncate">{user.id}</td>
-                <td className="max-w-48 truncate">{user.firstName}</td>
-                <td className="max-w-48 truncate">{user.lastName}</td>
-                <td className="max-w-80 truncate">{user.email}</td>
-                <td className="max-w-48 truncate">{user.profession}</td>
-                <td className="max-w-48 truncate">{user.city}</td>
-                <td className="max-w-48 truncate">{user.country}</td>
-                <td className="max-w-48 truncate">{user.dateCreated}</td>
-                <td className="w-24">
-                  <IconButton
-                    className="hover:text-secondary"
-                    icon={<FaTrash />}
-                    onClick={() => {
-                      deleteAction(user.id);
-                    }}
-                  />
-                </td>
-              </tr>
-            );
-          })}
+                {label}
+              </TableHeaderWithSort>
+            ))}
+            {/* Actions Column*/}
+            <th className="w-24"></th>
+          </tr>
+        </thead>
+        <tbody className="h-full w-full">
+          {page.length === 0 ? (
+            <tr>
+              <td colSpan={COLUMNS.length + 1} className="text-center">
+                No rows found
+              </td>
+            </tr>
+          ) : (
+            page.map((user, index) => {
+              return (
+                <tr
+                  key={`table-row-${index}`}
+                  className={`table-row-${index} odd:bg-gray-100 even:bg-(--color-surface) transition-colors duration-200 hover:bg-gray-200`}
+                >
+                  <td className="max-w-24 truncate">{user.id}</td>
+                  <td className="max-w-48 truncate">{user.firstName}</td>
+                  <td className="max-w-48 truncate">{user.lastName}</td>
+                  <td className="max-w-80 truncate">{user.email}</td>
+                  <td className="max-w-48 truncate">{user.profession}</td>
+                  <td className="max-w-48 truncate">{user.city}</td>
+                  <td className="max-w-48 truncate">{user.country}</td>
+                  <td className="max-w-48 truncate">{user.dateCreated}</td>
+                  <td className="w-24">
+                    <IconButton
+                      className="hover:text-secondary"
+                      icon={<FaTrash />}
+                      onClick={() => {
+                        deleteAction(user.id);
+                      }}
+                    />
+                  </td>
+                </tr>
+              );
+            })
+          )}
         </tbody>
       </table>
     </div>
