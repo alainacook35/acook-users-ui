@@ -19,6 +19,7 @@ import { Popover } from "@mui/material";
 import Button from "./Button";
 import UserFilters from "./UserFilters";
 import { useToast } from "../hooks/useToast";
+import CreateUserModal from "./CreateUserModal";
 
 export function UsersList() {
   const axiosInstance = useAxios();
@@ -31,6 +32,7 @@ export function UsersList() {
   const [search, setSearchValue] = useState("");
   const [filterPopoverAnchor, setFilterPopoverAnchor] =
     useState<HTMLButtonElement | null>(null);
+  const [createModalOpen, setCreateModalOpen] = useState(false);
 
   const { toast } = useToast();
 
@@ -112,13 +114,31 @@ export function UsersList() {
   };
 
   const deleteAction = (id: number) => {
-    axiosInstance.delete(`/users/${id}`).then(() => {
-      toast(`Successfully delete user ${id}`, { severity: "success" })
-    }).catch((err) => {
-      toast(`Failed to delete user ${id}`, { severity: "error" })
-    });
+    axiosInstance
+      .delete(`/users/${id}`)
+      .then(() => {
+        getPage(pageState.number, selectedPageSize);
+        toast(`Successfully delete user ${id}`, {
+          severity: "success",
+          duration: 5000,
+        });
+      })
+      .catch((err) => {
+        toast(`Failed to delete user ${id}`, {
+          severity: "error",
+          duration: 5000,
+        });
+      });
   };
-  
+
+  const handleCreateModalClose = (save: boolean) => {
+    if (save) {
+      getPage(0, selectedPageSize);
+    }
+
+    setCreateModalOpen(false);
+  }
+
   useEffect(() => {
     getPage(0, selectedPageSize);
   }, [selectedSort, selectedPageSize, selectedFilters, search]);
@@ -128,65 +148,72 @@ export function UsersList() {
   }
 
   return (
-    <div className="flex flex-1 min-h-0 w-full flex-col px-2 pt-1 pb-2">
-      <div className="flex justify-between">
-        <div className="my-auto">
-          <Button suffixIcon={<FaPlus />}>Create</Button>
-        </div>
-        <div className="flex gap-5">
-          <SearchField searchFunction={setSearchValue} />
+    <>
+      <div className="flex flex-1 min-h-0 w-full flex-col px-2 pt-1 pb-2">
+        <div className="flex justify-between">
           <div className="my-auto">
-            <IconButton icon={<FaFilter />} onClick={openFilterPopover} />
+            <Button suffixIcon={<FaPlus />} onClick={() => setCreateModalOpen(true)}>Create</Button>
           </div>
-          <Popover
-            open={Boolean(filterPopoverAnchor)}
-            id="filter-popover"
-            anchorEl={filterPopoverAnchor}
-            onClose={handleFilterPopoverClose}
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "left",
-            }}
-            transformOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            slotProps={{
-              paper: {
-                elevation: 0,
-                sx: {
-                  borderRadius: "var(--radius-lg)",
-                  boxShadow: "none",
-                  border: "2px solid var(--color-accent)",
-                },
-              },
-            }}
-          >
-            <div className="h-100 w-100 bg-white m-auto p-5">
-              <UserFilters
-                userFilters={selectedFilters}
-                setUserFilters={handleFilterPopoverClose}
+          <div className="flex gap-5">
+            <SearchField searchFunction={setSearchValue} />
+            <div className="my-auto">
+              <IconButton
+                
+                icon={<FaFilter />}
+                onClick={openFilterPopover}
               />
             </div>
-          </Popover>
+            <Popover
+              open={Boolean(filterPopoverAnchor)}
+              id="filter-popover"
+              anchorEl={filterPopoverAnchor}
+              onClose={handleFilterPopoverClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              transformOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              slotProps={{
+                paper: {
+                  elevation: 0,
+                  sx: {
+                    borderRadius: "var(--radius-lg)",
+                    boxShadow: "none",
+                    border: "2px solid var(--color-accent)",
+                  },
+                },
+              }}
+            >
+              <div className="max-h-110 w-110 bg-white m-auto p-5">
+                <UserFilters
+                  userFilters={selectedFilters}
+                  setUserFilters={handleFilterPopoverClose}
+                />
+              </div>
+            </Popover>
+          </div>
+        </div>
+        <div className="min-h-0 flex-1 overflow-y-auto border-2 border-solid border-gray-400 rounded-sm">
+          <Table
+            page={usersPage}
+            sort={selectedSort}
+            setSort={setSelectedSort}
+            deleteAction={deleteAction}
+          />
+        </div>
+        <div className="shrink-0">
+          <Pagination
+            selectedPageSize={selectedPageSize}
+            setSelectedPageSize={setSelectedPageSize}
+            paginationState={pageState}
+            getPage={getPage}
+          />
         </div>
       </div>
-      <div className="min-h-0 flex-1 overflow-y-auto border-2 border-solid border-gray-400 rounded-sm">
-        <Table
-          page={usersPage}
-          sort={selectedSort}
-          setSort={setSelectedSort}
-          deleteAction={deleteAction}
-        />
-      </div>
-      <div className="shrink-0">
-        <Pagination
-          selectedPageSize={selectedPageSize}
-          setSelectedPageSize={setSelectedPageSize}
-          paginationState={pageState}
-          getPage={getPage}
-        />
-      </div>
-    </div>
+      <CreateUserModal open={createModalOpen} onClose={handleCreateModalClose}/>
+    </>
   );
 }

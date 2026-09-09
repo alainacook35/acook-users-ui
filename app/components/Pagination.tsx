@@ -75,28 +75,28 @@ export default function Pagination({
         <div className="flex my-auto">
           <IconButton
             title="Go to first page"
-            className="first-page-btn text-primary transition-colors duration-200 hover:bg-gray-100 disabled:text-gray-300 disabled:bg-transparent"
+            className="first-page-btn  disabled:text-gray-300 disabled:bg-transparent"
             disabled={!!paginationState.empty || !!paginationState.first}
             icon={<FaAngleDoubleLeft />}
             onClick={getFirstPage}
           />
           <IconButton
             title="Go to previous page"
-            className="previous-page-btn text-primary transition-colors duration-200 hover:bg-gray-100 disabled:text-gray-300 disabled:bg-transparent"
+            className="previous-page-btn  disabled:text-gray-300 disabled:bg-transparent"
             disabled={!!paginationState.empty || !!paginationState.first}
             icon={<FaChevronLeft />}
             onClick={getPreviousPage}
           />
           <IconButton
             title="Go to next page"
-            className="next-page-btn text-primary transition-colors duration-200 hover:bg-gray-100 disabled:text-gray-300 disabled:bg-transparent"
+            className="next-page-btn  disabled:text-gray-300 disabled:bg-transparent"
             disabled={!!paginationState.empty || !!paginationState.last}
             icon={<FaChevronRight />}
             onClick={getNextPage}
           />
           <IconButton
             title="Go to last page"
-            className="last-page-btn text-primary transition-colors duration-200 hover:bg-gray-100 disabled:text-gray-300 disabled:bg-transparent"
+            className="last-page-btn  disabled:text-gray-300 disabled:bg-transparent"
             disabled={!!paginationState.empty || !!paginationState.last}
             icon={<FaAngleDoubleRight />}
             onClick={getLastPage}

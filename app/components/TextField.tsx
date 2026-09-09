@@ -1,25 +1,22 @@
+import type { ComponentPropsWithoutRef } from "react";
+
 export default function TextField({
   value,
   onChange,
-  placeholder,
-  id,
+  className,
+  ...inputProps
 }: {
   value: string;
   onChange: (value: string) => void;
-  placeholder?: string;
-  id?: string;
-}) {
+} & Omit<ComponentPropsWithoutRef<"input">, "value" | "onChange">) {
   return (
-    <div className="my-5">
-      <div className="flex gap-1 rounded-sm p-1 border-2 border-solid border-gray-300 duration-300 ease-in-out hover:border-primary focus-within:border-primary">
-        <input
-          id={id}
-          className="focus:outline-none"
-          placeholder={placeholder}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-        />
-      </div>
+    <div className={`flex gap-1 rounded-sm p-1 border-2 border-solid border-gray-300 duration-300 ease-in-out hover:border-primary focus-within:border-primary ${className ?? ""}`}>
+      <input
+        className={`focus:outline-none w-full`}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        {...inputProps}
+      />
     </div>
   );
 }

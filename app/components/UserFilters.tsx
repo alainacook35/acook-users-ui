@@ -14,9 +14,12 @@ export default function UserFilters({
   const [currentFilters, setCurrentFilters] = useState(userFilters);
   return (
     <div>
-      <div className="flex justify-between justify-between">
-        <p>Profession:</p>
+      <div className="flex justify-between justify-between my-5">
+        <div className="my-auto">
+          <p>Profession:</p>
+        </div>
         <TextField
+          className="w-64"
           value={currentFilters?.profession || ""}
           onChange={(value) => {
             setCurrentFilters((prev) => ({
@@ -26,9 +29,12 @@ export default function UserFilters({
           }}
         />
       </div>
-      <div className="flex justify-between">
-        <p>City:</p>
+      <div className="flex justify-between my-5">
+        <div className="my-auto">
+          <p>City:</p>
+        </div>
         <TextField
+          className="w-64"
           value={currentFilters?.city || ""}
           onChange={(value) => {
             setCurrentFilters((prev) => ({
@@ -38,9 +44,12 @@ export default function UserFilters({
           }}
         />
       </div>
-      <div className="flex justify-between">
-        <p>Country: </p>
+      <div className="flex justify-between my-5">
+        <div className="my-auto">
+          <p>Country: </p>
+        </div>
         <TextField
+          className="w-64"
           value={currentFilters?.country || ""}
           onChange={(value) => {
             setCurrentFilters((prev) => ({
@@ -50,9 +59,12 @@ export default function UserFilters({
           }}
         />
       </div>
-      <div className="flex justify-between">
-        <p>Created After: </p>
+      <div className="flex justify-between my-5">
+        <div className="my-auto">
+          <p>Created After: </p>
+        </div>
         <DateField
+          className="w-64"
           value={currentFilters.startDate || ""}
           onChange={(value) => {
             setCurrentFilters((prev) => ({
@@ -62,9 +74,12 @@ export default function UserFilters({
           }}
         />
       </div>
-      <div className="flex justify-between">
-        <p>Created Before: </p>
+      <div className="flex justify-between my-5">
+        <div className="my-auto">
+          <p>Created Before: </p>
+        </div>
         <DateField
+          className="w-64"
           value={currentFilters?.endDate || ""}
           onChange={(value) => {
             setCurrentFilters((prev) => ({
@@ -74,7 +89,7 @@ export default function UserFilters({
           }}
         />
       </div>
-      <div>
+      <div className="flex justify-end">
         <Button
           onClick={() => {
             setUserFilters(currentFilters);

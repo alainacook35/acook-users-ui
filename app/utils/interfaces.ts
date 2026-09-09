@@ -9,6 +9,15 @@ export interface IUser {
   dateCreated: string;
 }
 
+export interface IUserRequest {
+  firstName: string;
+  lastName: string;
+  email: string;
+  profession: string;
+  city: string;
+  country: string;
+}
+
 export interface IPage<T> {
   content: T[];
   sortDirection: "asc" | "desc";

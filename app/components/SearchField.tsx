@@ -24,13 +24,12 @@ export default function SearchField({
             }
           }}
         />
-      
-      <IconButton
-      className={searchValue.trim() === "" ? "text-gray-300" : "text-black"}
-        disabled={searchValue.trim() === ""}
-        icon={<FaMagnifyingGlass />}
-        onClick={() => searchFunction(searchValue)}
-      />
+
+        <IconButton
+          
+          icon={<FaMagnifyingGlass />}
+          onClick={() => searchFunction(searchValue)}
+        />
       </div>
     </div>
   );

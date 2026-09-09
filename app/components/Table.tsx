@@ -96,7 +96,7 @@ export default function Table({
                 <td className="max-w-48 truncate">{user.dateCreated}</td>
                 <td className="w-24">
                   <IconButton
-                    className="text-primary hover:text-secondary transition-colors duration-200"
+                    className="hover:text-secondary"
                     icon={<FaTrash />}
                     onClick={() => {
                       deleteAction(user.id);

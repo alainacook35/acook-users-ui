@@ -10,7 +10,7 @@ export default function IconButton({
   ...rest
 }: IconButtonProps) {
   return (
-    <button className={`rounded-full p-2 ${className ?? ""}`} {...rest}>
+    <button className={`rounded-full p-2 text-primary transition-colors duration-200 hover:bg-gray-100 ${className ?? ""}`} {...rest}>
       {icon}
     </button>
   );
